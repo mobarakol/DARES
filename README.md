@@ -95,7 +95,8 @@ You can download AF-Sfm Learners weights that we use in initialization with:
 
 ```shell
 gdown 1kf7LjQ6a2ACKr6nX5Uyee3of3bXn1xWB
-unzip -q Model_trained_end_to_end.zip 
+unzip -q Model_trained_end_to_end.zip
+mv Model_trained_end_to_end af_sfmlearner_weights
 ```
 
 ## 📊 Endovis evaluation
