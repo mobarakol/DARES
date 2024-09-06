@@ -561,9 +561,7 @@ class Trainer:
             reprojection_loss = l1_loss
         else:
             ms_ssim_loss = 1 - self.ms_ssim(pred, target)
-            # reprojection_loss = 0.85 * ms_ssim_loss + 0.15 * l1_loss
             reprojection_loss = 0.9 * ms_ssim_loss + 0.1 * l1_loss
-            #reprojection_loss = ms_ssim_loss
 
         return reprojection_loss
 
@@ -786,11 +784,5 @@ class Trainer:
             model_dict.update(pretrained_dict)
             self.models[n].load_state_dict(model_dict)
 
-        # loading adam state
-        # optimizer_load_path = os.path.join(self.opt.load_weights_folder, "adam.pth")
-        # if os.path.isfile(optimizer_load_path):
-            # print("Loading Adam weights")
-            # optimizer_dict = torch.load(optimizer_load_path)
-            # self.model_optimizer.load_state_dict(optimizer_dict)
-        # else:
+
         print("Adam is randomly initialized")
