@@ -4,7 +4,7 @@ import time
 import json
 import datasets
 import networks
-from networks import Customised_DAM
+from networks import DARES
 import numpy as np
 import torch.optim as optim
 import torch.nn as nn
@@ -42,7 +42,7 @@ class Trainer:
         if self.opt.use_stereo:
             self.opt.frame_ids.append("s")
 
-        self.models["depth_model"] = Customised_DAM()
+        self.models["depth_model"] = DARES()
         
         self.models["depth_model"].to(self.device)
         self.parameters_to_train += list(filter(lambda p: p.requires_grad, self.models["depth_model"].parameters()))
