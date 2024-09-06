@@ -126,7 +126,7 @@ CUDA_VISIBLE_DEVICES=0 python evaluate_depth.py --data_path <your_data_path> --l
 #### 3D Reconstruction
 
 <p align="center">
-<img src='imgs/reconstruction.png' width=800/> 
+<img src='imgs/reconstruction.png' width=500/> 
 </p>
 
 
