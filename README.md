@@ -161,4 +161,4 @@ If you have any questions, please feel free to contact mona.zeinoddin.22@ucl.ac.
 
 ## Acknowledgement
 
-Our code is based on the implementation of [AF-Sfm Learner](https://github.com/ShuweiShao/AF-SfMLearner). We AF-Sfm Learner's authors for their excellent work and repository.
+Our code is based on the implementation of [AF-Sfm Learner](https://github.com/ShuweiShao/AF-SfMLearner). We thank AF-Sfm Learner's authors for their excellent work and repository.
