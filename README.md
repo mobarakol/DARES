@@ -1,20 +1,16 @@
-# AF-SfMLearner
+# DARES
 
 This is the official PyTorch implementation for training and testing depth estimation models using the method described in
 
-> **Self-Supervised Monocular Depth and Ego-Motion Estimation in Endoscopy: Appearance Flow to the Rescue**
+> **DARES: Depth Anything in Robotic Endoscopic Surgery with Self-supervised Vector-LoRA of the Foundation Model**
 >
-> [Shuwei Shao](https://scholar.google.com.hk/citations?hl=zh-CN&user=ecZHSVQAAAAJ), Zhongcai Pei, [Weihai Chen](https://scholar.google.com.hk/citations?hl=zh-CN&user=5PoZrcYAAAAJ), [Wentao Zhu](https://scholar.google.com.hk/citations?hl=zh-CN&user=2hjYfqIAAAAJ), Xingming Wu, Dianmin Sun and [Baochang Zhang](https://scholar.google.com.hk/citations?hl=zh-CN&user=ImJz6MsAAAAJ)
+> Mona Sheikh Zeinoddin, Chiara Lena, Jiongqi Qu, Luca Carlini, Mattia
+Magro, Seunghoi Kim,  Elena De Momi,  Sophia Bano, Matthew
+Grech-Sollars, Evangelos Mazomenos,  Daniel C. Alexander, Danail
+Stoyanov, Matthew J. Clarkson and Mobarakol Islam 
 >
-> [accepted by Medical Image Analysis (arXiv pdf)](https://arxiv.org/pdf/2112.08122.pdf)
+> [accepted by the European Conference on Computer Vision 2024 Efficient Deep Learning for Foundation Models WorkShop (arXiv pdf)](https://arxiv.org/pdf/2408.17433)
 
-and 
-
-> **Self-Supervised Learning for Monocular Depth Estimation on Minimally Invasive Surgery Scenes**
->
-> [Shuwei Shao](https://scholar.google.com.hk/citations?hl=zh-CN&user=ecZHSVQAAAAJ), Zhongcai Pei, [Weihai Chen](https://scholar.google.com.hk/citations?hl=zh-CN&user=5PoZrcYAAAAJ), [Baochang Zhang](https://scholar.google.com.hk/citations?hl=zh-CN&user=ImJz6MsAAAAJ), Xingming Wu, Dianmin Sun and [David Doermann](https://scholar.google.com.hk/citations?hl=zh-CN&user=RoGOW9AAAAAJ)
->
-> [ICRA 2021 (pdf)](https://ieeexplore.ieee.org/abstract/document/9561508).
 
 #### Overview
 
@@ -27,26 +23,14 @@ and
 If you find our work useful in your research please consider citing our paper:
 
 ```
-@article{shao2022self,
-  title={Self-Supervised monocular depth and ego-Motion estimation in endoscopy: Appearance flow to the rescue},
-  author={Shao, Shuwei and Pei, Zhongcai and Chen, Weihai and Zhu, Wentao and Wu, Xingming and Sun, Dianmin and Zhang, Baochang},
-  journal={Medical image analysis},
-  volume={77},
-  pages={102338},
-  year={2022},
-  publisher={Elsevier}
+@article{zeinoddin2024dares,
+  title={DARES: Depth Anything in Robotic Endoscopic Surgery with Self-supervised Vector-LoRA of the Foundation Model},
+  author={Zeinoddin, Mona Sheikh and Lena, Chiara and Qu, Jiongqi and Carlini, Luca and Magro, Mattia and Kim, Seunghoi and De Momi, Elena and Bano, Sophia and Grech-Sollars, Matthew and Mazomenos, Evangelos and others},
+  journal={arXiv preprint arXiv:2408.17433},
+  year={2024}
 }
 ```
-```
-@inproceedings{shao2021self,
-  title={Self-Supervised Learning for Monocular Depth Estimation on Minimally Invasive Surgery Scenes},
-  author={Shao, Shuwei and Pei, Zhongcai and Chen, Weihai and Zhang, Baochang and Wu, Xingming and Sun, Dianmin and Doermann, David},
-  booktitle={2021 IEEE International Conference on Robotics and Automation (ICRA)},
-  pages={7159--7165},
-  year={2021},
-  organization={IEEE}
-}
-```
+
 
 
 
@@ -179,10 +163,10 @@ Note2: please revise color_aug=transforms.ColorJitter.get_params(self.brightness
 
 ## Contact
 
-If you have any questions, please feel free to contact swshao@buaa.edu.cn.
+If you have any questions, please feel free to contact mona.zeinoddin.22@ucl.ac.uk.
 
 
 
 ## Acknowledgement
 
-Our code is based on the implementation of [Monodepth2](https://github.com/nianticlabs/monodepth2). We thank Monodepth2's authors for their excellent work and repository.
+Our code is based on the implementation of [AF-Sfm Learner](https://github.com/ShuweiShao/AF-SfMLearner). We AF-Sfm Learner's authors for their excellent work and repository.
