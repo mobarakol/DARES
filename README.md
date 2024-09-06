@@ -84,27 +84,19 @@ The directory of dataset structure is shown as follows:
 
 ## ⏳ Endovis training
 
-**Stage-wise fashion:**
-
-Stage one:
-
-```shell
-CUDA_VISIBLE_DEVICES=0 python train_stage_one.py --data_path <your_data_path> --log_dir <path_to_save_model (optical flow)>
-```
-
-Stage two:
-
-```shell
-CUDA_VISIBLE_DEVICES=0 python train_stage_two.py --data_path <your_data_path> --log_dir <path_to_save_model (depth, pose, appearance flow, optical flow)> --load_weights_folder <path_to_the_trained_optical_flow_model_in_stage_one>
-```
-
-**End-to-end fashion:**
 
 ```shell
 CUDA_VISIBLE_DEVICES=0 python train_end_to_end.py --data_path <your_data_path> --log_dir <path_to_save_model (depth, pose, appearance flow, optical flow)>
 ```
 
+## Initializing with AF-Sfm Learner weights
 
+You can download AF-Sfm Learners weights that we use in initialization with:
+
+```shell
+gdown 1kf7LjQ6a2ACKr6nX5Uyee3of3bXn1xWB
+unzip -q Model_trained_end_to_end.zip 
+```
 
 ## 📊 Endovis evaluation
 
@@ -143,7 +135,7 @@ CUDA_VISIBLE_DEVICES=0 python evaluate_depth.py --data_path <your_data_path> --l
 </p>
 
 
-## 📦 Model zoo
+## Model zoo
 
 | Model        | Abs Rel | Sq Rel | RMSE | RMSE log | Link |
 | ------------ | ---------- | ------ | --------- | ---- | ---- |
