@@ -15,7 +15,7 @@ Stoyanov, Matthew J. Clarkson and Mobarakol Islam
 #### Overview
 
 <p align="center">
-<img src='imgs/overview.png' width=800/> 
+<img src='overview.png' width=800/> 
 </p>
 
 ## ✏️ 📄 Citation
