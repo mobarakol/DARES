@@ -14,6 +14,11 @@ from layers import *
 from torch.utils.data import DataLoader
 from tensorboardX import SummaryWriter
 from torchmetrics.image import MultiScaleStructuralSimilarityIndexMeasure
+import os
+
+script_path = os.path.abspath(__file__)
+
+root_dir = os.path.dirname(script_path)
 
 
 class Trainer:
