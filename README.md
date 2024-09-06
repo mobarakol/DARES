@@ -48,6 +48,15 @@ You can predict scaled disparity for a single image or a folder of images with:
 CUDA_VISIBLE_DEVICES=0 python test_simple.py --model_path <your_model_path> --image_path <your_image_or_folder_path>
 ```
 
+## Initializing with AF-Sfm Learner weights
+
+You can download AF-Sfm Learners weights that we use in initialization with:
+
+```shell
+gdown 1kf7LjQ6a2ACKr6nX5Uyee3of3bXn1xWB
+unzip -q Model_trained_end_to_end.zip
+mv Model_trained_end_to_end af_sfmlearner_weights
+```
 
 
 ## 💾 Datasets
@@ -87,16 +96,6 @@ The directory of dataset structure is shown as follows:
 
 ```shell
 CUDA_VISIBLE_DEVICES=0 python train_end_to_end.py --data_path <your_data_path> --log_dir <path_to_save_model (depth, pose, appearance flow, optical flow)>
-```
-
-## Initializing with AF-Sfm Learner weights
-
-You can download AF-Sfm Learners weights that we use in initialization with:
-
-```shell
-gdown 1kf7LjQ6a2ACKr6nX5Uyee3of3bXn1xWB
-unzip -q Model_trained_end_to_end.zip
-mv Model_trained_end_to_end af_sfmlearner_weights
 ```
 
 ## 📊 Endovis evaluation
@@ -140,9 +139,7 @@ CUDA_VISIBLE_DEVICES=0 python evaluate_depth.py --data_path <your_data_path> --l
 
 | Model        | Abs Rel | Sq Rel | RMSE | RMSE log | Link |
 | ------------ | ---------- | ------ | --------- | ---- | ---- |
-| Stage-wise (ID 5 in Table 8) | 0.059 | 0.435 | 4.925 | 0.082 |[baidu](https://pan.baidu.com/s/1MT5RrbDl8Wh6otPihD0kEw) (code:n6lh); [google](https://drive.google.com/file/d/14VFlTHq6raQkdyCRBCQYV-mbFO4eOM5b/view?usp=sharing)|
-| End-to-end (ID 3 in Table 8) | 0.059 | 0.470 | 5.062 | 0.083 |[baidu](https://pan.baidu.com/s/1JrcMBU0wKCbgEdiF2kzQ6A) (code:z4mo); [google](https://drive.google.com/file/d/1kf7LjQ6a2ACKr6nX5Uyee3of3bXn1xWB/view?usp=sharing)|
-| ICRA  | 0.063 | 0.489 | 5.185 | 0.086 |[baidu](https://pan.baidu.com/s/11SogWGI7C7kUGTkABPTMOA) (code:wbm8); [google](https://drive.google.com/file/d/1klpUlkYtXZiRsjY6SdRHvNAKDoYc-zgo/view?usp=sharing)|
+| End-to-end best model weights | 0.052 | 0.356 | 4.483 | 0.073 |[google](https://drive.google.com/file/d/11C0sw396TcH2hMM7u6uMr-uBsCP4l2Kd/view?usp=sharing)|
 
 ## Important Note
 
