@@ -42,11 +42,6 @@ class DepthAnythingDepthEstimationHead(nn.Module):
 
     def __init__(self, model_head):
         super().__init__()
-
-        # self.head_in_index = config.head_in_index
-        # self.patch_size = config.patch_size
-
-        # features = config.fusion_hidden_size
         self.conv1 = model_head.conv1
         self.conv2 = model_head.conv2
         self.activation1 = nn.ReLU()
@@ -54,8 +49,6 @@ class DepthAnythingDepthEstimationHead(nn.Module):
         self.activation2 = nn.Sigmoid()
 
     def forward(self, hidden_states, height, width):
-        #hidden_states = hidden_states[self.head_in_index]#[1, 64, 144, 176]
-        #print('Final Head:',hidden_states.shape)
         predicted_depth = self.conv1(hidden_states)
         predicted_depth = nn.functional.interpolate(
             predicted_depth,
@@ -63,13 +56,10 @@ class DepthAnythingDepthEstimationHead(nn.Module):
             mode="bilinear",
             align_corners=True,
         )
-        # print('head predicted_depth:', predicted_depth.shape)
         predicted_depth = self.conv2(predicted_depth)
         predicted_depth = self.activation1(predicted_depth)
         predicted_depth = self.conv3(predicted_depth)
         predicted_depth = self.activation2(predicted_depth)
-        # predicted_depth = predicted_depth.squeeze(dim=1)  # shape (batch_size, height, width)
-
         return predicted_depth
 
 class LoRAInitializer:
@@ -122,7 +112,7 @@ class LoRAInitializer:
             nn.init.zeros_(w_B.weight)
 
 
-class Customised_DAM(nn.Module):
+class Dares(nn.Module):
     def __init__(self, r = [14,14,12,12,10,10,8,8,8,8,8,8], lora = ['q', 'v']):
         super(Customised_DAM, self).__init__()
         model = DepthAnythingForDepthEstimation.from_pretrained("depth-anything/Depth-Anything-V2-Small-hf")
@@ -205,25 +195,16 @@ class Customised_DAM(nn.Module):
     def forward(self, pixel_values):
         outputs = self.backbone.forward_with_filtered_kwargs(
             pixel_values, output_hidden_states=None, output_attentions=None
-        ) # pixel_values:[3, 256, 320] , output:4, [1, 397, 384]
+        )
         hidden_states = outputs.feature_maps
-        # print(hidden_states[0])
         _, _, height, width = pixel_values.shape
         patch_size = self.config.patch_size
         patch_height = height // patch_size
         patch_width = width // patch_size
-        # print('h,w, p, ph, pw', height, width, patch_size, patch_height, patch_width) #h,w, p, ph, pw 256 320 14 18 22
-        # print('hidden_states1', len(hidden_states), hidden_states[0].shape, hidden_states[1].shape, hidden_states[2].shape, hidden_states[3].shape)
         hidden_states = self.neck(hidden_states, patch_height, patch_width)
-        #[1, 64, 18, 22], [1, 64, 36, 44], [1, 64, 72, 88], [1, 64, 144, 176]
-        # print('hidden_states2', len(hidden_states), hidden_states[0].shape, hidden_states[1].shape, hidden_states[2].shape, hidden_states[3].shape)
-        #predicted_depth = self.head(hidden_states[3], height, width)
         outputs = {}
         outputs[("disp", 0)] = self.head(hidden_states[3], height, width)
         outputs[("disp", 1)] = self.head(hidden_states[2], height/2, width/2)
         outputs[("disp", 2)] = self.head(hidden_states[1], height/4, width/4)
         outputs[("disp", 3)] = self.head(hidden_states[0], height/8, width/8)
-        # print(outputs[("disp", 0)].shape, outputs[("disp", 1)].shape,outputs[("disp", 2)].shape,outputs[("disp", 3)].shape,)
         return outputs
-        #return outputs[("disp", 0)]
-        # return predicted_depth
