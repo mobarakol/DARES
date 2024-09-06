@@ -55,34 +55,34 @@ class Trainer:
         self.models["position_encoder"] = networks.ResnetEncoder(
             self.opt.num_layers, self.opt.weights_init == "pretrained", num_input_images=2)  # 18
         
-        self.models["position_encoder"].load_state_dict(torch.load("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end/position_encoder.pth"))
+        self.models["position_encoder"].load_state_dict(torch.load(os.path.join(root_dir ,"af_sfmlearner_weights" ,"position_encoder.pth")))
         self.models["position_encoder"].to(self.device)
         self.parameters_to_train_0 += list(self.models["position_encoder"].parameters())
 
         self.models["position"] = networks.PositionDecoder(
             self.models["position_encoder"].num_ch_enc, self.opt.scales)
-        self.models["position"].load_state_dict(torch.load("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end/position.pth"))
+        self.models["position"].load_state_dict(torch.load(os.path.join(root_dir ,"af_sfmlearner_weights" ,"position.pth")))
         
         self.models["position"].to(self.device)
         self.parameters_to_train_0 += list(self.models["position"].parameters())
 
         self.models["transform_encoder"] = networks.ResnetEncoder(
             self.opt.num_layers, self.opt.weights_init == "pretrained", num_input_images=2)  # 18
-        self.models["transform_encoder"].load_state_dict(torch.load("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end/transform_encoder.pth"))
+        self.models["transform_encoder"].load_state_dict(torch.load(os.path.join(root_dir ,"af_sfmlearner_weights" ,"transform_encoder.pth")))
         self.models["transform_encoder"].to(self.device)
         self.parameters_to_train += list(self.models["transform_encoder"].parameters())
 
         self.models["transform"] = networks.TransformDecoder(
             self.models["transform_encoder"].num_ch_enc, self.opt.scales)
-        self.models["transform"].load_state_dict(torch.load("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end/transform.pth"))
+        self.models["transform"].load_state_dict(torch.load(os.path.join(root_dir ,"af_sfmlearner_weights" ,"transform.pth")))
         self.models["transform"].to(self.device)
         self.parameters_to_train += list(self.models["transform"].parameters())
 
         if self.use_pose_net:
 
             if self.opt.pose_model_type == "separate_resnet":
-                pose_encoder_path = os.path.join("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end", "pose_encoder.pth")
-                pose_decoder_path = os.path.join("/cluster/project7/Llava_2024/DARES_Medicss/DARES_MedICSS2024/AF_Sfm_weights/Model_trained_end_to_end", "pose.pth")
+                pose_encoder_path = os.path.join(root_dir, "af_sfmlearner_weights", "pose_encoder.pth")
+                pose_decoder_path = os.path.join(root_dir, "af_sfmlearner_weights", "pose.pth")
                 self.models["pose_encoder"] = networks.ResnetEncoder(
                     self.opt.num_layers,
                     self.opt.weights_init == "pretrained",
