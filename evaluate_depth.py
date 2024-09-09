@@ -157,6 +157,9 @@ def evaluate(opt):
         quit()
 
     gt_path = os.path.join(splits_dir, opt.eval_split, "gt_depths.npz")
+    print("M,splits_dir",splits_dir)
+    print("M,opt.eval_split",opt.eval_split)
+
     gt_depths = np.load(gt_path, fix_imports=True, encoding='latin1')["data"]
 
     print("-> Evaluating")
