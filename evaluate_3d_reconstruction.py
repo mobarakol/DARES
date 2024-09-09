@@ -87,8 +87,6 @@ def evaluate(opt):
 
     print("-> Loading weights from {}".format(opt.load_weights_folder))
 
-    # encoder_path = os.path.join(opt.load_weights_folder, "encoder.pth")
-    # decoder_path = os.path.join(opt.load_weights_folder, "depth.pth")
     model_path = os.path.join(opt.load_weights_folder, "depth_model.pth")
 
     weight_dict = torch.load(model_path)
@@ -104,20 +102,14 @@ def evaluate(opt):
     
     dataloader = DataLoader(dataset, 1, shuffle=False, num_workers=opt.num_workers,
                             pin_memory=True, drop_last=False)
-    # encoder = networks.ResnetEncoder(opt.num_layers, False)
-    # depth_decoder = networks.DepthDecoder(encoder.num_ch_enc, scales=range(4))
-    model = networks.Customised_DAM()
+    model = networks.DARES()
     
     model_dict = model.state_dict()
     model.load_state_dict({k: v for k, v in weight_dict.items() if k in model_dict})
-    # depth_decoder.load_state_dict(torch.load(decoder_path))
-
+    
     model.cuda()
     model.eval()
-    # encoder.cuda()
-    # encoder.eval()
-    # depth_decoder.cuda()
-    # depth_decoder.eval()
+
 
     rgbs = []
     pred_disps = []
