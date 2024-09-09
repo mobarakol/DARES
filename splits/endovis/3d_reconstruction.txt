@@ -4,5 +4,3 @@ dataset1/keyframe1	10	l
 dataset1/keyframe1	15	l
 dataset2/keyframe4  1352 l
 dataset2/keyframe4  1353 l
-paprfig0/keyframe1	1	l
-paprfig0/keyframe1	2	l
