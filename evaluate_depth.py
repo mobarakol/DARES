@@ -17,6 +17,7 @@ cv2.setNumThreads(0)  # This speeds up evaluation 5x on our unix systems (OpenCV
 
 
 splits_dir = os.path.join(os.path.dirname(__file__), "splits")
+print("splits_dir",splits_dir)
 
 # Models which were trained with stereo supervision were trained with a nominal
 # baseline of 0.1 units. The KITTI rig has a baseline of 54cm. Therefore,
