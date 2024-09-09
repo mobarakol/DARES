@@ -75,6 +75,11 @@ def evaluate(opt):
         print("-> Loading weights from {}".format(opt.load_weights_folder))
 
         filenames = readlines(os.path.join(splits_dir, opt.eval_split, "test_files.txt"))
+        
+        depth_model_path = os.path.join(opt.load_weights_folder, "depth_model.pth")
+
+        depth_model_dict = torch.load(depth_model_path)
+
         dataset = datasets.SCAREDRAWDataset(opt.data_path, filenames,
                                            256,320,
                                            [0], 4, is_train=False)
