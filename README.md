@@ -148,7 +148,7 @@ Note2: please revise color_aug=transforms.ColorJitter.get_params(self.brightness
 
 ## Contact
 
-If you have any questions, please feel free to contact mona.zeinoddin.22@ucl.ac.uk.
+If you have any questions, please feel free to contact mona.zeinoddin.22@ucl.ac.uk or mobarakol.islam@ucl.ac.uk
 
 
 
