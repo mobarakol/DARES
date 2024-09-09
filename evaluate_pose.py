@@ -14,6 +14,7 @@ import warnings
 warnings.filterwarnings('ignore')
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+
 # from https://github.com/tinghuiz/SfMLearner
 def dump_xyz(source_to_target_transformations):
     xyzs = []
@@ -78,7 +79,7 @@ def evaluate(opt):
 
     filenames = readlines(
         os.path.join(os.path.dirname(__file__), "splits", "endovis",
-                     "test_files_sequence1.txt"))
+                     "test_files_sequence{}.txt".format(opt.scared_pose_seq)))
 
     dataset = SCAREDRAWDataset(opt.data_path, filenames, opt.height, opt.width,
                                [0, 1], 4, is_train=False)
