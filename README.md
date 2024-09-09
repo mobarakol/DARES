@@ -136,14 +136,6 @@ CUDA_VISIBLE_DEVICES=0 python evaluate_depth.py --data_path <your_data_path> --l
 | ------------ | ---------- | ------ | --------- | ---- | ---- |
 | End-to-end best model weights | 0.052 | 0.356 | 4.483 | 0.073 |[google](https://drive.google.com/file/d/11C0sw396TcH2hMM7u6uMr-uBsCP4l2Kd/view?usp=sharing)|
 
-## Important Note
-
-If you use the latest PyTorch version,
-
-Note1: please try to add 'align_corners=True' to 'F.interpolate' and 'F.grid_sample' when you train the network, to get a good camera trajectory.
-
-Note2: please revise color_aug=transforms.ColorJitter.get_params(self.brightness,self.contrast,self.saturation,self.hue) to color_aug=transforms.ColorJitter(self.brightness,self.contrast,self.saturation,self.hue).
-
 
 
 ## Contact
