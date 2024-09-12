@@ -44,31 +44,16 @@ def test_simple(args):
     model_path = args.model_path
 
     print("-> Loading model from ", model_path)
-    encoder_path = os.path.join(model_path, "encoder.pth")
-    depth_decoder_path = os.path.join(model_path, "depth.pth")
+    depth_model_path = os.path.join(opt.load_weights_folder, "depth_model.pth")
 
-    # LOADING PRETRAINED MODEL
-    print("   Loading pretrained encoder")
-    encoder = networks.ResnetEncoder(18, False)
-    loaded_dict_enc = torch.load(encoder_path, map_location=device)
+    depth_model_dict = torch.load(depth_model_path)
+    depth_model = networks.DARES()
 
-    # extract the height and width of image that this model was trained with
-    feed_height = loaded_dict_enc['height']
-    feed_width = loaded_dict_enc['width']
-    filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in encoder.state_dict()}
+    model_dict = depth_model.state_dict()
 
-    encoder.load_state_dict(filtered_dict_enc)
-    encoder.to(device)
-    encoder.eval()
-
-    print("   Loading pretrained decoder")
-    depth_decoder = networks.DepthDecoder(num_ch_enc=encoder.num_ch_enc, scales=range(4))
-
-    loaded_dict = torch.load(depth_decoder_path, map_location=device)
-    depth_decoder.load_state_dict(loaded_dict)
-
-    depth_decoder.to(device)
-    depth_decoder.eval()
+    depth_model.load_state_dict({k: v for k, v in depth_model_dict.items() if k in model_dict})
+    depth_model.cuda()
+    depth_model.eval()
 
     # FINDING INPUT IMAGES
     if os.path.isfile(args.image_path):
@@ -101,8 +86,9 @@ def test_simple(args):
 
             # PREDICTION
             input_image = input_image.to(device)
-            features = encoder(input_image)
-            outputs = depth_decoder(features)
+            output = depth_model(input_image)
+            pred_disp, _ = disp_to_depth(output[("disp", 0)], opt.min_depth, opt.max_depth)
+            pred_disp = pred_disp.cpu()[:, 0].numpy()
 
             disp = outputs[("disp", 0)]
             disp_resized = torch.nn.functional.interpolate(
@@ -111,11 +97,10 @@ def test_simple(args):
             # Saving numpy file
             output_name = os.path.splitext(os.path.basename(image_path))[0]
             name_dest_npy = os.path.join(output_directory, "{}_disp.npy".format(output_name))
-            scaled_disp, _ = disp_to_depth(disp, 0.1, 150)
-            np.save(name_dest_npy, scaled_disp.cpu().numpy())
+            np.save(name_dest_npy, pred_disp)
 
             # Saving colormapped depth image
-            disp_resized_np = disp_resized.squeeze().cpu().numpy()
+            disp_resized_np = pred_disp.squeeze().cpu().numpy()
             vmax = np.percentile(disp_resized_np, 95)
 
             normalizer = mpl.colors.Normalize(vmin=disp_resized_np.min(), vmax=vmax) # 归一化到0-1
