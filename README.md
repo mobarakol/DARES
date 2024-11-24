@@ -74,7 +74,7 @@ We use the ffmpeg to convert the RGB.mp4 into images.png:
 ```shell
 find . -name "*.mp4" -print0 | xargs -0 -I {} sh -c 'output_dir=$(dirname "$1"); ffmpeg -i "$1" "$output_dir/%10d.png"' _ {}
 ```
-We only use the left frames in our experiments and please refer to extract_left_frames.py. For dataset 8 and 9, we rephrase keyframes 0-4 as keyframes 1-5.
+We only use the left frames in our experiments and please refer to [extract_left_frames.py](https://github.com/ShuweiShao/AF-SfMLearner/blob/main/extract_left_frames.py). For dataset 8 and 9, we rephrase keyframes 0-4 as keyframes 1-5.
 
 **Data structure**
 
