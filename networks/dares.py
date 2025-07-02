@@ -9,6 +9,7 @@ import os
 import torch.nn as nn
 import math
 from torch.nn.parameter import Parameter
+from network.rasa_adapter import RaSAAdapter
 
 class _LoRA_qkv(nn.Module):
     """In Dinov2 it is implemented as
@@ -18,25 +19,29 @@ class _LoRA_qkv(nn.Module):
     q, k, v = qkv.unbind(0)
     """
 
-    def __init__(
-            self,
-            w: nn.Module,
-            linear_a: nn.Module,
-            linear_b: nn.Module
-    ):
-        super().__init__()
-        self.w = w
-        self.linear_a = linear_a
-        self.linear_b = linear_b
-        self.dim = w.in_features
+def __init__(
+        self,
+        w: nn.Module,
+        in_dim: int,
+        hidden_dim: int,
+        out_dim: int,
+        use_rasa: bool = False,
+        r: int = 4,
+        alpha: float = 1.0,
+        dropout: float = 0.1,
+):
+    super().__init__()
+    self.w = w
+    self.dim = w.in_features
 
-    def forward(self, x):
-        W = self.w(x)
-        residual = W.clone()
-        deltaW = self.linear_b(self.linear_a(x))
+    if use_rasa:
+        from network.rasa_adapter import RaSAAdapter
+        LinearLayer = lambda i, o: RaSAAdapter(i, o, r=r, alpha=alpha, dropout=dropout)
+    else:
+        LinearLayer = nn.Linear
 
-        W += deltaW
-        return W
+    self.linear_a = LinearLayer(in_dim, hidden_dim)
+    self.linear_b = LinearLayer(hidden_dim, out_dim)
 
 class DepthAnythingDepthEstimationHead(nn.Module):
 
